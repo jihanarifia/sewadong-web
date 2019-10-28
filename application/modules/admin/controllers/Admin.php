@@ -722,28 +722,6 @@ class Admin extends MX_Controller {
     }
   }
 
-  public function category()
-  {
-    //---- get sub category ----
-    $subcat = $this->input->get('subcat', TRUE);
-
-    $url = base_api().'Tenant/?action=category';
-    $parser = $this->my_lib->native_curl($url); //call function
-    $data['get_idx'] = $this->uri->segment(3)==null ? 0 : $this->uri->segment(3);
-    $data['data_con'] = array();
-
-    $count = count($parser);
-    for($i=0; $i<=($count-1); $i++) {
-      array_push($data['data_con'], array(
-        "id_tenant_category" => $parser[$i]->id_tenant_category,
-        "tenant_category" => $parser[$i]->tenant_category));
-    }
-    $data['title'] = "Category";
-    $data['linkcat'] = strtolower(str_replace(' ', '', $data['title']));
-    $data['content'] = "category";
-    $this->load->view('admin/main', $data);
-  }
-
   public function phonenumber()
   {
     $url = base_api().'Phonenumber/?action=phonenumber_get&idcity=1';
@@ -1492,7 +1470,6 @@ class Admin extends MX_Controller {
 
   public function account()
   { 
-    
     $url = base_api().'user/';
     $res = $this->exec_curl($url,null, "GET");
     $result = $res['result'];
@@ -1517,15 +1494,15 @@ class Admin extends MX_Controller {
   public function accountdetail()
   {
     $idaccount = $this->input->get('id', TRUE);
-    $url = base_api()."Account/?action=retrieve_get&idaccount=".$idaccount;
-    $data['data_detail'] = $this->my_lib->native_curl($url); //call function
-    $data['createdate'] = date("Y-m-d", strtotime($data['data_detail']->account[0]->createdate));
-    $data['dateofbirth'] = date("Y-m-d", strtotime($data['data_detail']->account[0]->dateofbirth));
-
-    $url = base_api()."Bookmark/?action=listbookmark&pagenumber=1&pagesize=100&idaccount=".$idaccount;
-    $data['data_bookmark'] = $this->my_lib->native_curl($url); //call function
-
-    $data['title'] = $data['data_detail']->account[0]->fullname!=null?$data['data_detail']->account[0]->fullname:"Edit";
+    $url = base_api().'user/'.$idaccount;
+    $res = $this->exec_curl($url,null, "GET");
+    $result = $res['result'];
+    $data['data_detail'] = $result;
+    $data['data_con'] = array();
+    if(isset($result)){
+      $data['createdate'] = date("Y-m-d", strtotime($result['created_at']));      
+    }
+    $data['title'] = isset($result['username']) ? $result['username'] : "Edit";
     $data['content'] = "accountdetail";
     $this->load->view('admin/main', $data);
   }
