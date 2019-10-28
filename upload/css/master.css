@@ -1,0 +1,17 @@
+body
+{
+	font-family:Helvetica, Arial;
+}
+div#page-wrapper
+{
+	width:220px;
+	margin:auto;
+	border:1px solid #CCC;
+	padding:20px;
+}
+form label
+{
+	display:block;
+	margin-bottom:10px;
+	font-size:13px;
+}

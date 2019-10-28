@@ -1,0 +1,123 @@
+==== THIS PACKAGE INCLUDES A SAMPLE FORM FOUND AT index.php =====
+This sample form uploads a file, resizes it and moves it to the destination
+and size specified in the resize.php file.
+
+== To implement this upload form to your existing form ==
+
+1. Add a file input field to your form, like this,
+
+	`
+	<input type="file" name="imagetoresize" value="" />
+	<input type="hidden" name="max_file_size" value="2097152" /> 
+	`
+		
+2. Add this attribute to your form tag, 
+
+	`
+	enctype="multipart/form-data"
+	`
+		
+3. Copy the code in 'resize.php' to your PHP script that catches your form
+input data,
+
+	`
+	$error = false;
+	if(isset($_FILES['imagetoresize']))
+	{
+		if(is_file($_FILES['imagetoresize']['tmp_name']))
+		{
+			define('DESTINATION', 'images/');
+			define('RESIZEBY', 'w');
+			define('RESIZETO', 220);
+			define('QUALITY', 100);
+			
+			require_once 'image.class.php';
+			
+			$image = new Image($_FILES['imagetoresize']['tmp_name']);
+			
+			$image->destination = DESTINATION.$_FILES['imagetoresize']['name'];
+			$image->constraint = RESIZEBY;
+			$image->size = RESIZETO;
+			$image->quality = QUALITY;
+			
+			$image->render();
+		
+		}
+		else
+		{
+			$error = true;
+		}
+	}
+	`
+	
+Make sure the index of $_FILES['imagetoresize'] matches name="imagetoresize".
+
+The rendered image will be found at the destination path set in line that says,
+
+	`
+	define('DESTINATION', 'images/');
+	`
+
+That's all.
+
+
+
+
+==== TO USE THE IMAGE RESIZER SCRIPT ====
+You must have php_gd2 extension enabled in your webserver.
+The only file you need here is 'image.class.php'.
+
+1. Include the Image class in the file that catches the upload form inputs,
+
+	`
+	require_once 'image.class.php';
+	`
+
+2. Create an instance of the Image class, pass the path to the image, in our case
+the uploaded image file found in the path as $_FILES['image']['tmp_name'],
+
+	`
+	$image = new Image($_FILES['image']['tmp_name']);
+	`
+	
+3. Set the Destination path of the resized image,
+
+	`
+	$image->destination = 'uploaded.jpg';
+	`
+
+4. the Constraint, you can use 'w' (width), 'h' (height), 't' (thumbnail/both sides),
+
+	`
+	$image->constraint = 't';
+	`
+
+5. the New Size, the size of the constraint side
+
+	`
+	$image->size = 200;
+	`
+	
+6. the Image Quality, 0 to 100, 
+
+	`
+	$image->quality = 100;
+	`
+
+7. and finally render the image,
+
+	`
+	$image->render();
+	`
+	
+The rendered image will be found at the destination path that you set.
+
+
+
+That's all, thanks!
+
+Don't hesitate to contact me if you need help or find a problem.
+
+Regards,
+Pat Ambrosio
+cp.ambrosio@gmail.com
