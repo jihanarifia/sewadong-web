@@ -141,7 +141,7 @@
                           <td>
                             <div class="btn-group">
                               <a class="btn btn-success" href="<?=base_url().'admin/accountdetail?id='.$data_con[$i]['idaccount']?>"><i class="icon_pencil" ></i></a>
-                              <a data-toggle="modal" class="open-delete btn btn-danger" href="#deleteform" data-id="<?=$data_con[$i]['idaccount']?>"><i class="icon_trash_alt"></i></a>
+                              <!-- <a data-toggle="modal" class="open-delete btn btn-danger" href="#deleteform" data-id="<?=$data_con[$i]['idaccount']?>"><i class="icon_trash_alt"></i></a> -->
                             </div>
                           </td>
                         </tr>  
