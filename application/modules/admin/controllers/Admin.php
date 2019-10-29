@@ -722,84 +722,6 @@ class Admin extends MX_Controller {
     }
   }
 
-  public function phonenumber()
-  {
-    $url = base_api().'Phonenumber/?action=phonenumber_get&idcity=1';
-    $parser = $this->my_lib->native_curl($url); //call function
-    $data['data_con'] = array();
-    $count = count($parser);
-    if(!isset($parser[0]->status)) {
-      for($i=0; $i<=($count-1); $i++) {
-        array_push($data['data_con'], array(
-          "idphonenumber" => $parser[$i]->idphonenumber,
-          "idcity" => $parser[$i]->idcity,
-          "name" => $parser[$i]->name,
-          "phonenumber" => $parser[$i]->phonenumber));
-      }
-    }
-    $data['title'] = "Phone Number";
-    $data['content'] = "phonenumber";
-    $this->load->view('admin/main', $data);
-  }
-
-  public function insert_phone(){
-    $data = array(
-      'action' => 'insert_phonenumber',
-      'idcity' => '1',
-      'name' => $this->input->post('name', TRUE),
-      'phonenumber' => $this->input->post('phonenumber', TRUE));
-    $url = base_api().'Phonenumber/';
-    $parser = $this->my_lib->native_curl($url,$data);
-
-    if ($parser[0]->message == "success") {
-      $this->session->set_flashdata('message', 'Sucessfully Inserted');
-      redirect(base_url('admin/phonenumber'));
-    } else {
-      $this->session->set_flashdata('breakmessage', 'Can\'t be Insert.');
-      redirect(base_url('admin/phonenumber'));
-    }
-  }
-  public function update_phone(){
-    $data = array(
-      'action' => 'update_phonenumber',
-      'idcity' => '1',
-      'idphonenumber' => $this->input->post('idphonenumber', TRUE),
-      'name' => $this->input->post('name', TRUE),
-      'phonenumber' => $this->input->post('phonenumber', TRUE));
-
-    $url = base_api().'Phonenumber/';
-    $parser = $this->my_lib->native_curl($url,$data);
-
-    if ($parser[0]->message == "success") {
-      $this->session->set_flashdata('message', 'Sucessfully Updated');
-      redirect(base_url('admin/phonenumber'));
-    } else {
-      $this->session->set_flashdata('breakmessage', 'Can\'t be Updated.');
-      redirect(base_url('admin/phonenumber'));
-    }
-  }
-  public function delete_phone(){
-    $data = array(
-      'action' => 'delete_phonenumber',
-      'idphonenumber' => $this->input->post('idphonenumber', TRUE));
-
-
-
-    $url = base_api().'Phonenumber/';
-    $parser = $this->my_lib->native_curl($url,$data);
-    $data['message'] = $parser[0]->message;
-
-    if ($parser[0]->message == "success") {
-      $this->session->set_flashdata('message', 'Sucessfully Deleted');
-      $this->load->library('user_agent');
-      redirect($this->agent->referrer());
-    } else {
-      $this->session->set_flashdata('breakmessage', 'Can\'t be deleted.');
-      $this->load->library('user_agent');
-      redirect($this->agent->referrer());
-    }
-  }
-
   public function cctv(){
     $url = base_api().'Cctv/?action=listnew&idcity=1&pagenumber=1&pagesize=1000';
     $parser = $this->my_lib->native_curl($url); //call function
@@ -1656,6 +1578,79 @@ class Admin extends MX_Controller {
 
     if ($parser[0]->message == "success") {
       $this->session->set_flashdata('message', 'Sucessfully Deleted ');
+      $this->load->library('user_agent');
+      redirect($this->agent->referrer());
+    } else {
+      $this->session->set_flashdata('breakmessage', 'Can\'t be deleted.');
+      $this->load->library('user_agent');
+      redirect($this->agent->referrer());
+    }
+  }
+  
+  public function category()
+  {$url = base_api().'category';
+    $res = $this->exec_curl($url,null, "GET");
+    $result = $res['result'];
+    $data['data_con'] = array();
+    if(isset($result)){
+      $count = count($result);
+      for($i=0; $i<=($count-1); $i++) {
+        array_push($data['data_con'], array(
+          "category_id" => $result[$i]['category_id'],
+          "name" => $result[$i]['name']));
+      }
+    }
+
+    $data['title'] = "Category";
+    $data['content'] = "category";
+    $this->load->view('admin/main', $data);
+  }
+
+  public function insert_category(){    
+    $data = array(
+      'name' => $this->input->post('name', TRUE)
+    );
+    $url = base_api().'category';
+    $res = $this->exec_curl($url,$data, "POST");
+    $result = $res['result'];
+    if(isset($result)){
+      $this->session->set_flashdata('message', 'Sucessfully Inserted');
+      redirect(base_url('admin/category'));
+    }else {
+      $this->session->set_flashdata('breakmessage', 'Can\'t be Insert.');
+      redirect(base_url('admin/category'));
+    }
+  }
+
+  public function update_category(){    
+    $data = array(
+      'name' => $this->input->post('name', TRUE)
+    );
+    $url = base_api().'category';
+    $res = $this->exec_curl($url,$data, "PUT");
+    $result = $res['result'];
+    if(isset($result)){
+      $this->session->set_flashdata('message', 'Sucessfully Updated');
+      redirect(base_url('admin/category'));
+    }else {
+      $this->session->set_flashdata('breakmessage', 'Can\'t be Insert.');
+      redirect(base_url('admin/category'));
+    }
+  }
+  
+  public function delete_category(){
+    $data = array(
+      'action' => 'delete_phonenumber',
+      'idphonenumber' => $this->input->post('idphonenumber', TRUE));
+
+
+
+    $url = base_api().'Phonenumber/';
+    $parser = $this->my_lib->native_curl($url,$data);
+    $data['message'] = $parser[0]->message;
+
+    if ($parser[0]->message == "success") {
+      $this->session->set_flashdata('message', 'Sucessfully Deleted');
       $this->load->library('user_agent');
       redirect($this->agent->referrer());
     } else {

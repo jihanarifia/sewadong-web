@@ -204,24 +204,10 @@ if($('#empty_video').checked) {
       $("#del_id").prop("value", idtenant);
       $("#del_logo").prop("value", logo);
     });
-    //delete phone
-    $(".delete-phone").click(function(){
-      var idphonenumber = $(this).attr("data-id");
-      $("#del_id").prop("value", idphonenumber);
-    });
     //delete cctv rtsp
     $(".delete-rtsp").click(function(){
       var idcctv = $(this).attr("data-id");
       $("#del_idrtsp").prop("value", idcctv);
-    });
-    //update phone
-    $(".update-phone").click(function(){
-      var idphonenumber = $(this).attr("data-id");
-      var name = $(this).attr("data-name");
-      var phonenumber = $(this).attr("data-phone");
-      $("#u_idphonenumber").prop("value", idphonenumber);
-      $("#u_name").prop("value", name);
-      $("#u_phonenumber").prop("value", phonenumber);
     });
     //delete history
     $(".deletehistory").click(function(){

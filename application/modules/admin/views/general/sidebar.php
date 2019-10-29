@@ -51,6 +51,16 @@
               <li><a class="" href="<?=base_url().'admin/chargepayment'?>">Charge Payment</a></li> -->
             </ul>
           </li>
+          <li class="sub-menu <?=$this->session->userdata('sc_sess')[0]['privilege']!='administrator'?'hide':''?>">
+            <a href="#">
+              <i class="icon_group" ></i>
+              <span>Rental</span>
+              <span class="menu-arrow arrow_carrot-right"></span>
+            </a>
+            <ul class="sub">
+              <li><a class="" href="<?=base_url().'admin/category'?>">Category</a></li>
+            </ul>
+          </li>
           <!-- <li class="sub-menu <?=$this->session->userdata('sc_sess')[0]['privilege']!='administrator'?'hide':''?>">
             <a href="#">
               <i class="icon_documents_alt"></i>
