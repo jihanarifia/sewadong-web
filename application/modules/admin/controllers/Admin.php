@@ -1624,7 +1624,8 @@ class Admin extends MX_Controller {
 
   public function update_category(){    
     $data = array(
-      'name' => $this->input->post('name', TRUE)
+      'name' => $this->input->post('name', TRUE),
+      'category_id' => $this->input->post('category_id', TRUE)
     );
     $url = base_api().'category';
     $res = $this->exec_curl($url,$data, "PUT");
@@ -1638,25 +1639,19 @@ class Admin extends MX_Controller {
     }
   }
   
-  public function delete_category(){
+  public function delete_category(){   
     $data = array(
-      'action' => 'delete_phonenumber',
-      'idphonenumber' => $this->input->post('idphonenumber', TRUE));
-
-
-
-    $url = base_api().'Phonenumber/';
-    $parser = $this->my_lib->native_curl($url,$data);
-    $data['message'] = $parser[0]->message;
-
-    if ($parser[0]->message == "success") {
+      'category_id' => $this->input->post('category_id', TRUE)
+    );
+    $url = base_api().'category';
+    $res = $this->exec_curl($url,$data, "DELETE");
+    $result = $res['result'];
+    if($res){
       $this->session->set_flashdata('message', 'Sucessfully Deleted');
-      $this->load->library('user_agent');
-      redirect($this->agent->referrer());
-    } else {
-      $this->session->set_flashdata('breakmessage', 'Can\'t be deleted.');
-      $this->load->library('user_agent');
-      redirect($this->agent->referrer());
+      redirect(base_url('admin/category'));
+    }else {
+      $this->session->set_flashdata('breakmessage', 'Sucessfully Deleted');
+      redirect(base_url('admin/category'));
     }
   }
 
