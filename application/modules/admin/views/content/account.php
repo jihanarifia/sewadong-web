@@ -55,15 +55,14 @@
                           <div class="row">
                             <div class="col-lg-6">
                               <div class="form-group">
-                                <label for="name">Fullname</label>
-                                <input type="text" class="form-control" id="name" name="fullname" placeholder="Fullname" autofocus required>
+                                <label for="name">Username</label>
+                                <input type="text" class="form-control" id="name" name="username" placeholder="Username" autofocus required>
                               </div>
                               <div class="form-group">
                                 <label for="subcategory">Privilege</label>
                                 <select class="form-control m-bot15" onchange="myFunction()" name="privilege" id="mySelect" >
-                                  <option value="resident">Resident</option>
-                                  <option value="visitor">Visitor</option>
-                                  <option value="administrator">Administrator</option>
+                                  <option value="1">Tenant</option>
+                                  <option value="2">Regular User</option>
                                 </select>
                               </div>
                               <div class="form-group">
@@ -82,8 +81,8 @@
                                 </div>
                               </div>
                               <div class="form-group">
-                                <label for="close">Date of Birth</label>
-                                <input type="date" class="form-control" id="Date of Birth" name="dateofbirth" placeholder="Date of Birth" required>
+                                <label for="name">Address</label>
+                                <input type="text" class="form-control" id="address" name="address" placeholder="Address" autofocus required>
                               </div>
                             </div>
                             <div class="col-lg-6">
@@ -98,10 +97,6 @@
                               <div class="form-group">
                                 <label for="day">Password</label>
                                 <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
-                              </div>
-                              <div class="form-group">
-                                <label for="name">PsCode</label>
-                                <input type="text" class="form-control" id="name" name="pscode" placeholder="PsCode" autofocus>
                               </div>
                             </div>
                           </div>

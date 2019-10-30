@@ -128,7 +128,7 @@ class Admin extends MX_Controller {
     $result = $res['result'];
     if(isset($result)){
       $user=array();
-      $role = $result['role_id'] =="1" || $result['role_id'] =="2" ? 'administrator' : 'User';
+      $role = $result['role_id'] =="1" ? 'administrator' : 'User';
       array_push($user, array(
         "idaccount"=> $result['user_id'],
         "email" => $result['email'],
@@ -1530,39 +1530,27 @@ class Admin extends MX_Controller {
   }
 
   public function insert_account(){
-    if($this->input->post('privilege', TRUE)=='administrator'){
-      $dateofbirth = '';
-      $pscode='';
-    }
-    else if($this->input->post('privilege', TRUE)=='visitor'){
-      $dateofbirth = '';
-      $pscode='';
-    }
-    else if($this->input->post('privilege', TRUE)=='resident'){
-      $dateofbirth = $this->input->post('dateofbirth', TRUE);
-      $pscode= $this->input->post('pscode', TRUE);
-    }
+    $image = "https://www.csircmc.res.in/sites/default/files/default_images/default_man_photo.jpg";
     $data = array(
-      'action' => 'register',
-      'privilege' => $this->input->post('privilege', TRUE),
-      'fullname' => $this->input->post('fullname', TRUE),
-      'gender' => $this->input->post('gender', TRUE),
-      'dateofbirth' => $dateofbirth,
-      'phone' => $this->input->post('phone', TRUE),
-      'password' => $this->input->post('password', TRUE),
+      'username' => $this->input->post('username', TRUE),
       'email' => $this->input->post('email', TRUE),
-      'pscode' => $pscode
-    );
-    $url = base_api().'Account/';
-    $parser = $this->my_lib->native_curl($url,$data);
-    if ($parser[0]->message == null) {
+      'phone_number' => $this->input->post('phone', TRUE),
+      'password' => $this->input->post('password', TRUE),
+      'gender' => $this->input->post('gender', TRUE),
+      'address' => $this->input->post('address', TRUE),
+      'role_id' => $this->input->post('privilege', TRUE),
+      "image" => $this->input->post('gender', TRUE) == "F" ? "https://icon-library.net/images/no-profile-picture-icon-female/no-profile-picture-icon-female-3.jpg" : $image
+    );    
+
+    $url = base_api().'user';
+    $res = $this->exec_curl($url,$data, "POST");
+    $result = $res['result'];
+    if(isset($result)){
       $this->session->set_flashdata('message', 'Sucessfully Inserted');
-      $this->load->library('user_agent');
-      redirect($this->agent->referrer());
-    } else {
+      redirect(base_url('admin/account'));
+    }else {
       $this->session->set_flashdata('breakmessage', 'Can\'t be Insert.');
-      $this->load->library('user_agent');
-      redirect($this->agent->referrer());
+      redirect(base_url('admin/account'));
     }
   }
 
