@@ -177,7 +177,8 @@ class Admin extends MX_Controller {
       for($i=0; $i<=($count-1); $i++) {
         array_push($data['data_con'], array(
           "category_id" => $result[$i]['category_id'],
-          "name" => $result[$i]['name']));
+          "name" => $result[$i]['name'],
+          "image" => $result[$i]['image']));
       }
     }
 
@@ -188,8 +189,10 @@ class Admin extends MX_Controller {
 
   public function insert_category(){    
     $data = array(
-      'name' => $this->input->post('name', TRUE)
+      'name' => $this->input->post('name', TRUE),
+      'image' => $this->input->post('picture', TRUE)
     );
+    
     $url = base_api().'category';
     $res = $this->exec_curl($url,$data, "POST");
     $result = $res['result'];
@@ -205,7 +208,8 @@ class Admin extends MX_Controller {
   public function update_category(){    
     $data = array(
       'name' => $this->input->post('name', TRUE),
-      'category_id' => $this->input->post('category_id', TRUE)
+      'category_id' => $this->input->post('category_id', TRUE),
+      'image' => $this->input->post('picture', TRUE)
     );
     $url = base_api().'category';
     $res = $this->exec_curl($url,$data, "PUT");

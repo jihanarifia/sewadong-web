@@ -38,6 +38,10 @@
                                     <label for="name">Name</label>
                                     <input type="" class="form-control" id="name" name="name" placeholder="Name" required>
                                   </div>
+                                  <div class="form-group">
+                                    <label for="name">Picture</label>
+                                    <input type="" class="form-control" id="picture" name="picture" placeholder="Picture" required>
+                                  </div>
                                   <div class="row ">
                                     <div class="col-lg-10"></div>
                                     <div class="col-lg-2">
@@ -67,6 +71,10 @@
                                   <div class="form-group">
                                     <label for="name">Name</label>
                                     <input type="" class="form-control" id="u_name" name="name" placeholder="Name" value="" required>
+                                  </div>
+                                  <div class="form-group">
+                                    <label for="name">Picture</label>
+                                    <input type="" class="form-control" id="u_picture" name="picture" placeholder="Picture" required>
                                   </div>
                                   <input type="hidden" name="category_id" id="u_idcategory" value="">
                                   <div class="row ">
@@ -118,6 +126,7 @@
                             <thead>
                               <tr>
                                 <th><i class="icon_building"></i> Category Name</th>
+                                <th><i class="icon_building"></i> Image</th>
                                 <th><i class="icon_cogs"></i> Action</th>
                                 
                               </tr>
@@ -126,9 +135,10 @@
                               <?php if(isset($data_con)!=false && empty($data_con)==false) { $i=0; foreach($data_con as $data_con[]) { ?>  
                                 <tr>
                                   <td><?=$data_con[$i]['name']?></td>
+                                  <td><?=$data_con[$i]['image']?></td>
                                   <td>
                                     <div class="btn-group">
-                                      <a data-toggle="modal" class="btn btn-success update-category" href="#updateform" data-id="<?=$data_con[$i]['category_id']?>" data-name="<?=$data_con[$i]['name']?>" ><i class="icon_pencil" ></i></a>
+                                      <a data-toggle="modal" class="btn btn-success update-category" href="#updateform" data-id="<?=$data_con[$i]['category_id']?>" data-name="<?=$data_con[$i]['name']?>" data-picture="<?=$data_con[$i]['image']?>" ><i class="icon_pencil" ></i></a>
                                       <a data-toggle="modal" class="delete-category btn btn-danger" href="#deleteform"  data-id="<?=$data_con[$i]['category_id']?>"><i class="icon_trash_alt"></i></a>
                                     </div>
                                   </td>
@@ -160,8 +170,10 @@
       $(".update-category").click(function(){
         var category_id = $(this).attr("data-id");
         var name = $(this).attr("data-name");
+        var image = $(this).attr("data-picture");
         $("#u_idcategory").prop("value", category_id);
         $("#u_name").prop("value", name);
+        $("#u_picture").prop("value", image);
       });
       //delete phone
       $(".delete-category").click(function(){
